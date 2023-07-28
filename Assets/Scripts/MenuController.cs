@@ -24,4 +24,9 @@ public class MenuController : MonoBehaviour
                 item.Close();
         }
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
