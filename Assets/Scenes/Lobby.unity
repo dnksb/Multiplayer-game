@@ -162,7 +162,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 704.1124, y: -300.30685}
-  m_SizeDelta: {x: 300, y: 30}
+  m_SizeDelta: {x: 300, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &12405541
 MonoBehaviour:
@@ -3158,7 +3158,7 @@ GameObject:
   - component: {fileID: 1803126180}
   - component: {fileID: 1803126179}
   m_Layer: 0
-  m_Name: Vintage_Style_Photography_game_menu_background_jelly_0
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

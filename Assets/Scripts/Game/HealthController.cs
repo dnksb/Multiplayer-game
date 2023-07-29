@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class HealthController : MonoBehaviour
 {
-
-
     public void OnTriggerEnter(Collider other) {
         if(other.tag == "Player")
         {
-            other.GetComponent<InputController>().HP += 20;
+            other.GetComponent<InputController>().UpdateHP(20);
             Destroy(gameObject);
         }
     }

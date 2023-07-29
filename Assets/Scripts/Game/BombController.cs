@@ -6,13 +6,14 @@ public class BombController : MonoBehaviour
 {
     public float SpeedMove;
 
+    public void Start()
+    {
+        transform.Translate(0, 0, 1);
+    }
+
     public void FixedUpdate()
     {
-        gameObject.transform.localPosition += new Vector3(
-            Mathf.Cos(transform.eulerAngles.y) * SpeedMove,
-            0,
-            Mathf.Sin(transform.eulerAngles.y) * SpeedMove
-        );
+        transform.Translate(0, 0, SpeedMove);
     }
 
     public void OnTriggerEnter(Collider other) {

@@ -18,20 +18,25 @@ public class InputController : MonoBehaviour
     public int HP;
     public Text HpText;
 
-    public GameObject Bomb;
+    public Button Button;
+    public Text NickName;
 
     void Start()
     {
         HpText = GameObject.FindWithTag("HP").GetComponent<Text>();
         Joystick = GameObject.FindWithTag("Joystick").GetComponent<FixedJoystick>();
+        Button = GameObject.FindWithTag("Button").GetComponent<Button>();
         View = GetComponent<PhotonView>();
+        NickName.text = PhotonNetwork.NickName;
         if(!View.IsMine)
         {
             Destroy(Body);
-            
         }
         else
+        {
+            Button.onClick.AddListener(Shot);
             HpText.text = $"hp: {HP}";
+        }
     }
 
     public void FixedUpdate()
@@ -68,9 +73,17 @@ public class InputController : MonoBehaviour
     {
         if(!View.IsMine)
             return;
-        Transform tmp = Instantiate(Bomb).GetComponent<Transform>();
-        // tmp.position = transform.position;
-        // tmp.eulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
-        // Debug.Log(tmp.eulerAngles);
+        PhotonNetwork.Instantiate(
+            Path.Combine("PhotonPrefabs", "Bomb"),
+            transform.position,
+            transform.rotation);
+    }
+
+    public void UpdateHP(int value)
+    {
+        if(HP > 99)
+            return;
+        HP += value;
+        HpText.text = $"hp: {HP}";
     }
 }

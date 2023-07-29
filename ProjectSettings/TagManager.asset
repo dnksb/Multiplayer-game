@@ -8,6 +8,7 @@ TagManager:
   - HP
   - Wall
   - Bomb
+  - Button
   layers:
   - Default
   - TransparentFX
