@@ -40,6 +40,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public override void OnDisable()
     {
+        WinController.instanse.PlayerIsLeave(PhotonNetwork.NickName);
         base.OnDisable();
     }
 

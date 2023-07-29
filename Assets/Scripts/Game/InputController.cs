@@ -23,32 +23,31 @@ public class InputController : MonoBehaviour
 
     void Start()
     {
-        HpText = GameObject.FindWithTag("HP").GetComponent<Text>();
         Joystick = GameObject.FindWithTag("Joystick").GetComponent<FixedJoystick>();
         Button = GameObject.FindWithTag("Button").GetComponent<Button>();
         View = GetComponent<PhotonView>();
-        NickName.text = PhotonNetwork.NickName;
-        if(!View.IsMine)
+        NickName.text = "Враг";
+        if(View.IsMine)
         {
-            Destroy(Body);
-        }
-        else
-        {
+            HpText = GameObject.FindWithTag("HP").GetComponent<Text>();
+            NickName.text = "Ты";
             Button.onClick.AddListener(Shot);
             HpText.text = $"hp: {HP}";
         }
+        WinController.instanse.PlayerConnect(NickName.text);
     }
 
     public void FixedUpdate()
     {
-        if(!View.IsMine)
-            return;
-
         if(HP < 1)
         {
             animator.SetBool("IsDead", true);
+            WinController.instanse.PlayerIsDied(NickName.text);
             return;
         }
+
+        if(!View.IsMine)
+            return;
 
         Body.velocity = new Vector3(
             Joystick.Horizontal * SpeedMove,
@@ -64,18 +63,28 @@ public class InputController : MonoBehaviour
         if(other.tag != "Bomb")
             return;
 
+        if(HP < 1)
+            return;
+
         Destroy(other.gameObject);
         HP -= 20;
-        HpText.text = $"hp: {HP}";
+
+        if(View.IsMine)
+            HpText.text = $"hp: {HP}";
     }
 
     public void Shot()
     {
         if(!View.IsMine)
             return;
+        if(HP < 1)
+            return;
+        transform.Translate(0, 0, 1);
+        Vector3 tmp = transform.position;
+        transform.Translate(0, 0, -1);
         PhotonNetwork.Instantiate(
             Path.Combine("PhotonPrefabs", "Bomb"),
-            transform.position,
+            tmp,
             transform.rotation);
     }
 
@@ -84,6 +93,8 @@ public class InputController : MonoBehaviour
         if(HP > 99)
             return;
         HP += value;
-        HpText.text = $"hp: {HP}";
+
+        if(View.IsMine)
+            HpText.text = $"hp: {HP}";
     }
 }
