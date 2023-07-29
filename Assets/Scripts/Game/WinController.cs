@@ -40,6 +40,6 @@ public class WinController : MonoBehaviour
 
     public void Quit()
     {
-        Application.LoadLevel("Lobby");
+        Application.Quit();
     }
 }
